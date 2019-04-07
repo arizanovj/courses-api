@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/arizanovj/courses/env"
-	"github.com/go-ozzo/ozzo-validation"
+	validation "github.com/go-ozzo/ozzo-validation"
 	goqu "gopkg.in/doug-martin/goqu.v4"
 )
 
@@ -46,11 +46,13 @@ var StringFilters = []string{
 	EqualTo,
 }
 var FromDateFilters = []string{
+	EqualTo,
 	GreaterThan,
 	GreaterThanOrEqualTo,
 }
 
 var ToDateFilters = []string{
+	EqualTo,
 	LessThan,
 	LessThanOrEqualTo,
 }

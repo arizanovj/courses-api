@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/arizanovj/courses/env"
-	"github.com/arizanovj/courses/libs"
+	pagination "github.com/arizanovj/courses/libs"
 	"github.com/arizanovj/courses/libs/filter"
 	_ "github.com/go-sql-driver/mysql"
 	goqu "gopkg.in/doug-martin/goqu.v4"
@@ -36,14 +36,11 @@ func (video *Video) Get(p *pagination.Paginator, f *filter.Filter) ([]*Video, er
 	query = p.Paginate(query)
 
 	sqlstring, args, _ := query.ToSql()
-	fmt.Printf("%+v\n", sqlstring)
+
 	rows, err := video.Env.DB.Query(sqlstring, args...)
 	defer rows.Close()
 	for rows.Next() {
 		c := new(Video)
-
-		fmt.Printf("%+v\n", &c)
-
 		if err := rows.Scan(&c.ID, &c.Name, &c.Description, &c.Cover, &c.Src, &c.Offline, &c.CourseID, &c.CreatedAt, &c.UpdatedAt); err != nil {
 			fmt.Printf("%+v\n", err)
 		}
